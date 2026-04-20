@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Withdrawal Pending</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="card">
+    <h2>⏳ Withdrawal Pending</h2>
+
+    <p>You requested: <strong>${{ amount }}</strong></p>
+    <p>Destination: {{ wallet_address }}</p>
+
+    <p style="color: orange;">
+        Awaiting admin confirmation of your 30% payment.
+    </p>
+
+    <a href="/dashboard/"><button>Back to Dashboard</button></a>
+</div>
+
+</body>
+</html>

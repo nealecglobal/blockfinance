@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Withdraw - BlockInvest</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 15px;
+            width: 350px;
+            margin: 80px auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .summary {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="title">Withdraw Funds</div>
+    <div class="balance">Balance: ${{ balance }}</div>
+
+    {% if message %}
+        <p style="color:red">{{ message }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input type="number" id="amount" name="amount" placeholder="Enter amount" step="0.01" required>
+
+        <input type="text" name="wallet_address" placeholder="Your Wallet Address" required>
+
+        {% comment %} <div class="summary">
+            30% Fee: $<span id="fee">0.00</span>
+        </div> {% endcomment %}
+
+        <button type="submit">Proceed</button>
+    </form>
+    
+</div>
+
+
+<script>
+    const amountInput = document.getElementById('amount');
+    const feeDisplay = document.getElementById('fee');
+
+    amountInput.addEventListener('input', function() {
+        let value = parseFloat(this.value) || 0;
+        let fee = value * 0.3;
+        feeDisplay.innerText = fee.toFixed(2);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+        <h3>Reach Out to Us</h3>
+        <p class="text-muted">
+            Send Your transaction hash and Screenshot to any of the support links for quick Verification
+        </p>
+        <p class="text-muted">
+            For fast support, contact us directly via any of the channels below
+        </p>
+    </div>
+
+    <!-- SUPPORT CARDS -->
+    <div class="row g-4 justify-content-center">
+
+        <!-- WhatsApp -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-4" style="border-radius: 15px;">
+                <h5>WhatsApp</h5>
+                <p class="text-muted small">Instant support chat</p>
+                <a href="https://wa.me/234XXXXXXXXXX" target="_blank"
+                   class="btn btn-success w-100">
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- Telegram -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-4" style="border-radius: 15px;">
+                <h5>Telegram</h5>
+                <p class="text-muted small">Secure crypto support</p>
+                <a href="https://t.me/yourusername" target="_blank"
+                   class="btn btn-primary w-100">
+                    Open Telegram
+                </a>
+            </div>
+        </div>
+
+        <!-- Signal -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-4" style="border-radius: 15px;">
+                <h5>Signal</h5>
+                <p class="text-muted small">Private communication</p>
+                <a href="https://signal.me/#p/yournumber" target="_blank"
+                   class="btn btn-dark w-100">
+                    Open Signal
+                </a>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-4" style="border-radius: 15px;">
+                <h5>Email</h5>
+                <p class="text-muted small">Official support mail</p>
+                <a href="mailto:support@blockinvest.com"
+                   class="btn btn-outline-secondary w-100">
+                    Send Email
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NOTE -->
+    <div class="text-center mt-5">
+        <p class="text-muted">
+            ⚡ For faster response, include your transaction hash when contacting support
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

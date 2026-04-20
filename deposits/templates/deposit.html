@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block title %}Deposit{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h4>Deposit Crypto</h4>
+        <p class="text-muted">Select a coin and copy wallet address</p>
+    </div>
+
+    <!-- COIN SELECT -->
+    <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+        <div class="card-body">
+
+            <h6 class="mb-3">1. Select Coin</h6>
+
+            <div class="d-flex gap-2 flex-wrap">
+
+                <button class="coin-btn active" onclick="selectCoin('BTC', this)">BTC</button>
+                <button class="coin-btn" onclick="selectCoin('ETH', this)">ETH</button>
+                <button class="coin-btn" onclick="selectCoin('BNB', this)">BNB</button>
+                <button class="coin-btn" onclick="selectCoin('SOL', this)">SOL</button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- WALLET DISPLAY -->
+    <div class="card shadow-sm mb-4 text-center" style="border-radius: 15px;">
+        <div class="card-body">
+
+            <h6 id="coinTitle">Bitcoin (BTC) Deposit Address</h6>
+
+            <!-- ADDRESS -->
+            <div class="input-group my-3">
+                <input type="text" class="form-control text-center"
+                       id="walletAddress"
+                       value="{{ btc_address }}" readonly>
+
+                <button class="btn btn-outline-primary" onclick="copyAddress()">
+                    Copy
+                </button>
+            </div>
+
+            <!-- WARNING (DYNAMIC) -->
+            <small class="text-muted" id="coinWarning">
+                Send only BTC to this address
+            </small>
+
+        </div>
+    </div>
+
+    <!-- DEPOSIT FORM -->
+    <div class="card shadow-sm" style="border-radius: 15px;">
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- selected coin -->
+                <input type="hidden" name="coin" id="coinInput" value="BTC">
+
+                <div class="mb-3">
+                    <label class="form-label">Amount ($)</label>
+                    <input type="number" name="amount" step="0.01"
+                           class="form-control"
+                           placeholder="Enter deposit amount"
+                           required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 py-3">
+                    Request Deposit
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<nav class="navbar navbar-dark bg-dark fixed-bottom d-md-none">
+    <div class="container-fluid d-flex justify-content-around text-center">
+
+        <a href="{% url 'dashboard' %}" class="text-white text-decoration-none">
+            <div>🏠</div>
+            <small>Home</small>
+        </a>
+
+        <a href="{% url 'deposit' %}" class="text-white text-decoration-none">
+            <div>💰</div>
+            <small>Deposit</small>
+        </a>
+
+        <a href="{% url 'invest' %}" class="text-white text-decoration-none">
+            <div>📈</div>
+            <small>Invest</small>
+        </a>
+
+        <a href="{% url 'withdraw_request' %}" class="text-white text-decoration-none">
+            <div>💸</div>
+            <small>Withdraw</small>
+        </a>
+
+    </div>
+</nav>
+
+
+<!-- STYLE -->
+<style>
+.coin-btn {
+    padding: 10px 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.coin-btn:hover {
+    border-color: #0d6efd;
+}
+
+.coin-btn.active {
+    background: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+</style>
+
+<!-- SCRIPT -->
+<script>
+
+const wallets = {
+    BTC: {
+        address: "{{ btc_address }}",
+        label: "Bitcoin (BTC) Deposit Address",
+        warning: "Send only BTC to this address"
+    },
+    ETH: {
+        address: "{{ eth_address }}",
+        label: "Ethereum (ETH) Deposit Address",
+        warning: "Send only ETH to this address"
+    },
+    BNB: {
+        address: "{{ bnb_address }}",
+        label: "Binance Coin (BNB) Deposit Address",
+        warning: "Send only BNB to this address"
+    },
+    SOL: {
+        address: "{{ sol_address }}",
+        label: "Solana (SOL) Deposit Address",
+        warning: "Send only SOL to this address"
+    }
+};
+
+function selectCoin(coin, element) {
+
+    document.querySelectorAll('.coin-btn').forEach(btn => btn.classList.remove('active'));
+    element.classList.add('active');
+
+    document.getElementById("coinInput").value = coin;
+
+    document.getElementById("walletAddress").value = wallets[coin].address;
+    document.getElementById("coinTitle").innerText = wallets[coin].label;
+    document.getElementById("coinWarning").innerText = wallets[coin].warning;
+}
+
+function copyAddress() {
+    let input = document.getElementById("walletAddress");
+    input.select();
+    document.execCommand("copy");
+    alert("Wallet address copied!");
+}
+
+</script>
+
+{% endblock %}

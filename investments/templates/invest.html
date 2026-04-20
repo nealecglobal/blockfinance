@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}Invest{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h4>Invest Funds</h4>
+        <p class="text-muted">Choose a plan and grow your money</p>
+    </div>
+
+    <!-- BALANCE -->
+    <div class="card bg-dark text-white mb-4" style="border-radius: 15px;">
+        <div class="card-body">
+            <h6>Your Balance</h6>
+            <h3>$ {{ balance }}</h3>
+        </div>
+    </div>
+
+    <!-- ALERT MESSAGE -->
+    {% if message %}
+        <div class="alert {% if 'successful' in message %}alert-success{% else %}alert-danger{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- AMOUNT -->
+        <div class="mb-4">
+            <label class="form-label">Amount ($)</label>
+            <input type="number" name="amount" step="0.01" class="form-control" placeholder="Enter amount" required>
+        </div>
+
+        <!-- INVESTMENT PLANS -->
+        <label class="form-label mb-3">Select Investment Plan</label>
+
+        <div class="row g-3 mb-4">
+
+            <!-- CARD -->
+            {% for code, name, profit in plans %}
+            <div class="col-md-4">
+                <div class="card plan-card h-100 p-3 text-center"
+                     onclick="selectPlan('{{ code }}', this)"
+                     style="cursor:pointer; border-radius:15px;">
+
+                    <h5>{{ name }}</h5>
+                    <p class="text-muted">Duration Plan</p>
+
+                    <h4 class="text-success">{{ profit }}% ROI</h4>
+
+                    <input type="radio" name="plan" value="{{ code }}" hidden>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="btn btn-primary w-100 py-3">
+            Invest Now
+        </button>
+
+    </form>
+    
+    <nav class="navbar navbar-dark bg-dark fixed-bottom d-md-none">
+    <div class="container-fluid d-flex justify-content-around text-center">
+
+        <a href="{% url 'dashboard' %}" class="text-white text-decoration-none">
+            <div>🏠</div>
+            <small>Home</small>
+        </a>
+
+        <a href="{% url 'deposit' %}" class="text-white text-decoration-none">
+            <div>💰</div>
+            <small>Deposit</small>
+        </a>
+
+        <a href="{% url 'invest' %}" class="text-white text-decoration-none">
+            <div>📈</div>
+            <small>Invest</small>
+        </a>
+
+        <a href="{% url 'withdraw_request' %}" class="text-white text-decoration-none">
+            <div>💸</div>
+            <small>Withdraw</small>
+        </a>
+
+    </div>
+</nav>
+
+
+</div>
+
+<!-- STYLE -->
+<style>
+.plan-card {
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    border-color: #0d6efd;
+}
+
+.plan-card.active {
+    border-color: #0d6efd;
+    background: #e7f1ff;
+}
+</style>
+
+<!-- SCRIPT -->
+<script>
+function selectPlan(value, element) {
+    // remove active from all
+    document.querySelectorAll('.plan-card').forEach(card => {
+        card.classList.remove('active');
+    });
+
+    // add active to selected
+    element.classList.add('active');
+
+    // check radio inside card
+    element.querySelector('input').checked = true;
+}
+</script>
+
+{% endblock %}

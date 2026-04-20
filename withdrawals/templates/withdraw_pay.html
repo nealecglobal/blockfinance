@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Withdraw{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- MAIN CARD -->
+    <div class="card shadow-lg text-center p-5" style="border-radius: 18px;">
+
+        <!-- ICON / WARNING -->
+        <div style="font-size: 50px;">⚠️</div>
+
+        <h2 class="mt-3">Withdrawal Currently Unavailable</h2>
+
+        <p class="text-muted mt-3">
+            We are currently experiencing temporary maintenance on our withdrawal system.
+            Please contact support immediately to process your withdrawal request.
+        </p>
+
+        <hr class="my-4">
+
+        <h5 class="mb-3">Contact Support for Fast Processing</h5>
+
+        <!-- SUPPORT LINKS -->
+        <div class="d-grid gap-3 col-md-6 mx-auto">
+
+            <a href="https://t.me/yourusername"
+               target="_blank"
+               class="btn btn-primary btn-lg">
+                Telegram Support
+            </a>
+
+            <a href="https://signal.me/#p/yournumber"
+               target="_blank"
+               class="btn btn-dark btn-lg">
+                Signal Support
+            </a>
+
+            <a href="mailto:support@blockinvest.com"
+               class="btn btn-outline-secondary btn-lg">
+                Email Support
+            </a>
+
+        </div>
+
+        <!-- NOTE -->
+        <p class="text-danger mt-4">
+            ⚡ Kindly include your username and transaction details when contacting support for faster assistance.
+        </p>
+
+    </div>
+
+
+</div>
+<nav class="navbar navbar-dark bg-dark fixed-bottom d-md-none">
+    <div class="container-fluid d-flex justify-content-around text-center">
+
+        <a href="{% url 'dashboard' %}" class="text-white text-decoration-none">
+            <div>🏠</div>
+            <small>Home</small>
+        </a>
+
+        <a href="{% url 'deposit' %}" class="text-white text-decoration-none">
+            <div>💰</div>
+            <small>Deposit</small>
+        </a>
+
+        <a href="{% url 'invest' %}" class="text-white text-decoration-none">
+            <div>📈</div>
+            <small>Invest</small>
+        </a>
+
+        <a href="{% url 'withdraw_request' %}" class="text-white text-decoration-none">
+            <div>💸</div>
+            <small>Withdraw</small>
+        </a>
+
+    </div>
+</nav>
+
+
+{% endblock %}

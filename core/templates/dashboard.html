@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4>Welcome, {{ request.user.username }}</h4>
+        <span class="badge bg-success">Active</span>
+    </div>
+
+    <!-- BALANCE CARD -->
+    <div class="card text-white bg-dark shadow-lg mb-4" style="border-radius: 20px;">
+        <div class="card-body">
+            <h6>Total Balance</h6>
+            <h2 class="fw-bold">$ {{ balance }}</h2>
+            <small class="text-light">Available funds</small>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="row text-center mb-4">
+        <div class="col">
+            <a href="{% url 'deposit' %}" class="btn btn-success w-100 py-3">Deposit</a>
+        </div>
+        <div class="col">
+            <a href="{% url 'invest' %}" class="btn btn-primary w-100 py-3">Invest</a>
+        </div>
+        <div class="col">
+            <a href="{% url 'withdraw_request' %}" class="btn btn-warning w-100 py-3">Withdraw</a>
+        </div>
+    </div>
+
+    <!-- INVESTMENTS -->
+    <div class="card shadow-sm" style="border-radius: 15px;">
+        <div class="card-body">
+            <h5 class="mb-3">Your Investments</h5>
+
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Plan</th>
+                            <th>Amount</th>
+                            <th>Profit</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inv in investments %}
+                        <tr>
+                            <td><span class="badge bg-primary">{{ inv.plan }}</span></td>
+                            <td>$ {{ inv.amount }}</td>
+                            <td class="text-success">$ {{ inv.profit }}</td>
+                            <td>{{ inv.created_at|date:"M d, Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                No investments yet
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="ticker-container mb-3">
+    <div class="ticker">
+        {% for i in "123456789"|make_list %}
+            <span>
+                💸 {{ random_names|random }} invested ${{ random_amounts|random }} • {{ random_times|random }}
+            </span>
+        {% endfor %}
+         class="ticker">
+        {% for i in "123456789"|make_list %}
+            <span>
+                💸 {{ random_names|random }} invested ${{ random_amounts|random }} • {{ random_times|random }}
+            </span>
+        {% endfor %}
+    </div>
+</div>
+<!-- 🔥 MOBILE BOTTOM NAV (CRYPTO STYLE) -->
+<nav class="navbar navbar-dark bg-dark fixed-bottom d-md-none">
+    <div class="container-fluid d-flex justify-content-around text-center">
+
+        <a href="{% url 'dashboard' %}" class="text-white text-decoration-none">
+            <div>🏠</div>
+            <small>Home</small>
+        </a>
+
+        <a href="{% url 'deposit' %}" class="text-white text-decoration-none">
+            <div>💰</div>
+            <small>Deposit</small>
+        </a>
+
+        <a href="{% url 'invest' %}" class="text-white text-decoration-none">
+            <div>📈</div>
+            <small>Invest</small>
+        </a>
+
+        <a href="{% url 'withdraw_request' %}" class="text-white text-decoration-none">
+            <div>💸</div>
+            <small>Withdraw</small>
+        </a>
+
+    </div>
+</nav>
+<style>
+.ticker-container {
+    overflow: hidden;
+    background: #0d1117;
+    border-radius: 10px;
+    padding: 10px;
+    color: #00ffcc;
+    font-size: 14px;
+    white-space: nowrap;
+    position: relative;
+}
+
+.ticker {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scrollTicker 25s linear infinite;
+    will-change: transform;
+}
+
+.ticker span {
+    margin-right: 50px;
+    display: inline-block;
+}
+
+@keyframes scrollTicker {
+    0% {
+        transform: translateX(0);   /* 🔥 FIX: start immediately */
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+</style>
+
+{% endblock %}
