@@ -1,35 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Withdraw - BlockInvest</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #020617);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
         .card {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 15px;
-            width: 350px;
-            margin: 80px auto;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            width: 380px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .title {
-            font-size: 20px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
         .balance {
             font-size: 14px;
             color: #94a3b8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input {
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #1e293b;
+            background: #020617;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
         }
 
         .summary {
-            background: #0f172a;
-            padding: 10px;
+            background: #020617;
+            padding: 12px;
             border-radius: 10px;
-            margin-top: 10px;
+            font-size: 13px;
+            color: #cbd5f5;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            font-weight: 600;
             font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(59,130,246,0.4);
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -37,28 +107,27 @@
 
 <div class="card">
     <div class="title">Withdraw Funds</div>
-    <div class="balance">Balance: ${{ balance }}</div>
+    <div class="balance">Available Balance: ${{ balance }}</div>
 
     {% if message %}
-        <p style="color:red">{{ message }}</p>
+        <div class="error">{{ message }}</div>
     {% endif %}
 
     <form method="post">
         {% csrf_token %}
 
-        <input type="number" id="amount" name="amount" placeholder="Enter amount" step="0.01" required>
+        <input type="number" id="amount" name="amount" placeholder="Enter amount ($)" step="0.01" required>
 
-        <input type="text" name="wallet_address" placeholder="Your Wallet Address" required>
+        <input type="text" name="wallet_address" placeholder="Wallet Address" required>
 
         {% comment %} <div class="summary">
-            30% Fee: $<span id="fee">0.00</span>
+            <span>Fee (30%)</span>
+            <span>$<span id="fee">0.00</span></span>
         </div> {% endcomment %}
 
-        <button type="submit">Proceed</button>
+        <button type="submit">Withdraw Now</button>
     </form>
-    
 </div>
-
 
 <script>
     const amountInput = document.getElementById('amount');
