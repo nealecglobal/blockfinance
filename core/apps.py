@@ -11,7 +11,7 @@ class CoreConfig(AppConfig):
 
         if not User.objects.filter(username="admin").exists():
             User.objects.create_superuser(
-                username="krimmzy",
-                email="lemoakorede@gmail.com",
+                username="krimmzyadmin",
+                email="lemoakorede1@gmail.com",
                 password="krimmzy@101"
             )
