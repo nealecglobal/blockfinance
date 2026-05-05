@@ -88,8 +88,9 @@ WSGI_APPLICATION = 'blockinvest.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get("postgresql://block_invest_user:nQtROKRVGoUjXXjivGWU5AQMhhErDrIj@dpg-d7sso3f7f7vs73dd6hhg-a/block_invest", "sqlite:///db.sqlite3"),
-        conn_max_age=600
+        os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3"),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
