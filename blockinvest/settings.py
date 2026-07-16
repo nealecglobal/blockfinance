@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-y+-#rfj1lr%bsh)ayt(439my2lwu677ldn@87&u5rgjpa0e4lx
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 
-ALLOWED_HOSTS = ['.onrender.com', '.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['.onrender.com', '.pythonanywhere.com', '127.0.0.1', 'blockinvest-t2gx.onrender.com', 'localhost']
 
 # Application definition
 
@@ -124,6 +124,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://blockinvest-t2gx.onrender.com",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
